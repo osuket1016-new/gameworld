@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>Game Hub - GameWorld</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #0B0F14;
+      color: #D8DFE8;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      background: #151B23;
+      padding: 22px 6%;
+      border-bottom: 1px solid #27313D;
+    }
+
+    .logo {
+      color: #6996CB;
+      font-size: 26px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .back {
+      color: #6996CB;
+      text-decoration: none;
+    }
+
+    .panel {
+      margin-top: 24px;
+      padding: 28px;
+      background: #151B23;
+      border: 1px solid #27313D;
+      border-radius: 14px;
+    }
+
+.art {
+  width: 100%;
+  height: 360px;
+  padding: 0;
+  background: #222C38;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+}
+
+.art img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .art {
+    height: 260px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+}
+
+    h1 { margin-bottom: 8px; }
+    h2 { font-size: 20px; }
+    p { line-height: 1.7; }
+
+    .muted { color: #A7B4C5; }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      background: #0B0F14;
+      color: white;
+      border: 1px solid #344153;
+      border-radius: 8px;
+      margin: 8px 0 18px;
+    }
+
+    .status {
+      padding: 15px;
+      background: #222C38;
+      border-radius: 8px;
+      margin: 16px 0;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 18px;
+      background: #344153;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">GameWorld</a>
+  </header>
+
+  <main>
+    <a class="back" href="index.html">← Back to Games</a>
+
+    <div class="panel">
+      <div class="art" id="gameIcon">🎮</div>
+
+      <h1 id="gameName">Game Name</h1>
+      <p class="muted" id="gameMeta"></p>
+      <p id="gameDescription"></p>
+
+      <div class="status">
+  <strong>Game Data Verification</strong>
+  <p id="verificationStatus" class="muted"></p>
+  <p id="lastVerified" class="muted"></p>
+</div>
+<div class="status">
+  <h2>Official Sources</h2>
+  <div id="officialSources">
+    No verified official sources available.
+  </div>
+</div>
+      <h2>Game Information</h2>
+      <p class="muted" id="developer"></p>
+
+      <h2>Availability & Installation</h2>
+
+      <label for="country">Your Country / Region</label>
+      <select id="country" onchange="updateStatus()">
+        <option value="Philippines">Philippines</option>
+        <option value="Malaysia">Malaysia</option>
+        <option value="Singapore">Singapore</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <div class="status">
+        <strong id="availability">Not verified</strong>
+        <p class="muted" id="statusMessage"></p>
+      </div>
+
+<div class="status">
+  <h2>Regional Installation Requirements</h2>
+
+  <p>Official Download:
+    <span id="regionalDownload">Not verified</span>
+  </p>
+
+  <p>Account Requirements:
+    <span id="regionalAccount">Not verified</span>
+  </p>
+
+  <p>Phone Verification:
+    <span id="regionalPhone">Unknown</span>
+  </p>
+
+  <p>Identity Verification:
+    <span id="regionalIdentity">Unknown</span>
+  </p>
+
+  <p>International Server:
+    <span id="regionalServer">Unknown</span>
+  </p>
+
+  <p>Evidence Sources:
+    <span id="regionalEvidence">No sources recorded</span>
+  </p>
+  <div id="evidenceList"></div>
+  
+<h3>Steam Store Observation</h3>
+
+<div id="storeObservation">
+  <p>Price visible: <span id="storePrice">Unknown</span></p>
+  <p>Purchase button visible: <span id="storePurchase">Unknown</span></p>
+  <p>Steam account country confirmed: <span id="storeCountry">Unknown</span></p>
+  <p>Observed on: <span id="storeObservedAt">Never</span></p>
+</div>
+
+<p class="muted">
+  Store observations do not guarantee purchase,
+  download, or installation eligibility.
+</p>
+
+
+  <p>Last Checked:
+    <span id="regionalChecked">Never</span>
+  </p>
+</div>
+
+      <a class="button" id="guideLink" href="guide.html">
+  View Installation Guide
+</a>
+    </div>
+  </main>
+
+  <script src="games.js"></script>
+  <script>
+   
+const params = new URLSearchParams(window.location.search);
+const id = params.get("id") || "wukong";
+
+const game = gameDatabase.find(item => item.id === id);
+
+const sourcesContainer =
+  document.getElementById("officialSources");
+
+if (game && game.officialSources) {
+  const sources = game.officialSources.filter(
+    source => source.verified === true
+  );
+
+  if (sources.length > 0) {
+    sourcesContainer.textContent = "";
+
+    sources.forEach(source => {
+      const link = document.createElement("a");
+
+      link.href = source.url;
+      link.textContent = source.name;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.className = "button";
+
+      sourcesContainer.appendChild(link);
+    });
+  }
+}
+
+if (game) {
+  const status = game.verificationStatus || "unverified";
+
+  document.getElementById("verificationStatus").textContent =
+    status === "verified"
+      ? "Verified"
+      : "Not Verified";
+
+  document.getElementById("lastVerified").textContent =
+    game.lastVerified
+      ? "Last verified: " + game.lastVerified
+      : "Last verified: Never";
+}
+
+document.getElementById("guideLink").href =
+  "guide.html?id=" + encodeURIComponent(id);
+
+
+    if (game) {
+      document.getElementById("gameName").textContent = game.name;
+const gameArt = document.getElementById("gameIcon");
+
+gameArt.replaceChildren();
+
+if (game.coverImage) {
+  const cover = document.createElement("img");
+
+  cover.src = game.coverImage;
+  cover.alt = game.name;
+
+  cover.onerror = function() {
+    gameArt.textContent = game.icon || "🎮";
+  };
+
+  gameArt.appendChild(cover);
+} else {
+  gameArt.textContent = game.icon || "🎮";
+}
+      document.getElementById("gameMeta").textContent =
+        game.country + " · " + game.genre;
+      document.getElementById("gameDescription").textContent =
+        game.description;
+      document.getElementById("developer").textContent =
+        "Developer: " + game.developer;
+} else {
+  document.getElementById("gameName").textContent =
+    "Game not found";
+
+  document.getElementById("gameIcon").textContent = "🎮";
+
+  document.getElementById("gameDescription").textContent =
+    "This game could not be found in the GameWorld database.";
+
+  document.getElementById("guideLink").style.display = "none";
+
+  document.getElementById("availability").textContent =
+    "Game not found";
+}
+        
+function updateStatus() {
+  const country = document.getElementById("country").value;
+
+  const region = game?.availability?.[country];
+
+  const statusNames = {
+    available: "Officially Available",
+    restricted: "Region Restricted",
+    unavailable: "Not Officially Supported",
+    unverified: "Not Verified"
+  };
+
+  const status = region?.status || "unverified";
+
+  document.getElementById("availability").textContent =
+    statusNames[status] || "Not Verified";
+
+  document.getElementById("statusMessage").textContent =
+    region?.notes ||
+    "Official availability and installation requirements " +
+    "for " + country + " have not been verified yet.";
+  document.getElementById("regionalDownload").textContent =
+    region?.officialDownload || "Not verified";
+
+  document.getElementById("regionalAccount").textContent =
+    region?.accountRequirements || "Not verified";
+
+  function yesNoUnknown(value) {
+    if (value === true) return "Yes";
+    if (value === false) return "No";
+    return "Unknown";
+  }
+
+  document.getElementById("regionalPhone").textContent =
+    yesNoUnknown(region?.phoneVerification);
+
+  document.getElementById("regionalIdentity").textContent =
+    yesNoUnknown(region?.identityVerification);
+
+  document.getElementById("regionalServer").textContent =
+    yesNoUnknown(region?.internationalServer);
+
+  document.getElementById("regionalEvidence").textContent =
+    region?.evidenceSources?.length
+      ? region.evidenceSources.length + " source(s) recorded"
+      : "No sources recorded";
+
+  document.getElementById("regionalChecked").textContent =
+    region?.lastChecked || "Never";
+  const evidenceList =
+    document.getElementById("evidenceList");
+
+  evidenceList.replaceChildren();
+
+  const evidenceSources = region?.evidenceSources || [];
+
+  evidenceSources.forEach(source => {
+    const item = document.createElement("div");
+    item.style.marginTop = "12px";
+    item.style.padding = "12px";
+    item.style.background = "#151B23";
+    item.style.borderRadius = "8px";
+
+    const title = document.createElement("p");
+    title.textContent = source.title || "Untitled source";
+
+    const link = document.createElement("a");
+    link.textContent = "View Source";
+    link.href = source.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.className = "button";
+
+    
+const note = document.createElement("p");
+note.className = "muted";
+
+function isEvidenceOutdated(checkedAt) {
+  if (!checkedAt) return false;
+
+  const checkedDate = new Date(checkedAt + "T00:00:00");
+
+  if (Number.isNaN(checkedDate.getTime())) {
+    return false;
+  }
+
+  const today = new Date();
+
+  const daysPassed =
+    (today.getTime() - checkedDate.getTime()) /
+    (1000 * 60 * 60 * 24);
+
+  return daysPassed > 90;
+}
+
+const verificationLabels = {
+  pending: "Pending Verification",
+  verified: "Verified",
+  outdated: "Needs Recheck"
+};
+
+
+const outdated = isEvidenceOutdated(source.checkedAt);
+
+note.textContent =
+  source.verificationStatus === "outdated" ||
+  (source.verificationStatus === "verified" && outdated)
+    ? "Needs Recheck"
+    : verificationLabels[source.verificationStatus] ||
+      "Pending Verification";
+
+
+const checkedDate = document.createElement("p");
+checkedDate.className = "muted";
+checkedDate.textContent =
+  "Last checked: " + (source.checkedAt || "Never");
+
+
+    item.appendChild(title);
+    item.appendChild(note);
+    item.appendChild(checkedDate);
+
+    if (source.url &&
+        /^https:\/\/[^/]+/i.test(source.url)) {
+      item.appendChild(link);
+    }
+
+    evidenceList.appendChild(item);
+  });
+  
+const observation = region?.storeObservation;
+
+function observationText(value) {
+  if (value === true) return "Yes";
+  if (value === false) return "No";
+  return "Unknown";
+}
+
+document.getElementById("storePrice").textContent =
+  observationText(observation?.priceVisible);
+
+document.getElementById("storePurchase").textContent =
+  observationText(observation?.purchaseButtonVisible);
+
+document.getElementById("storeCountry").textContent =
+  observationText(observation?.accountCountryConfirmed);
+
+document.getElementById("storeObservedAt").textContent =
+  observation?.observedAt || "Never";
+
+
+
+}
+
+
+    const savedCountry =
+  localStorage.getItem("gameworld_country") || "Philippines";
+
+document.getElementById("country").value = savedCountry;
+
+document.getElementById("country").addEventListener("change", function() {
+  localStorage.setItem("gameworld_country", this.value);
+});
+
+updateStatus();
+  </script>
+</body>
+</html>

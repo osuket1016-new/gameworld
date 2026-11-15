@@ -1,0 +1,440 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1">
+  <title>Installation Guide - GameWorld</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #0B0F14;
+      color: #D8DFE8;
+      font-family: Arial, sans-serif;
+    }
+
+    header {
+      padding: 22px 6%;
+      background: #151B23;
+      border-bottom: 1px solid #27313D;
+    }
+
+    .logo {
+      color: #6996CB;
+      font-size: 26px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    a {
+      color: #6996CB;
+    }
+
+    .panel {
+      padding: 28px;
+      margin-top: 22px;
+      background: #151B23;
+      border: 1px solid #27313D;
+      border-radius: 12px;
+    }
+
+    .muted {
+      color: #A7B4C5;
+      line-height: 1.7;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      background: #0B0F14;
+      color: white;
+      border: 1px solid #344153;
+      border-radius: 8px;
+    }
+
+    .step {
+      padding: 14px;
+      margin: 12px 0;
+      background: #222C38;
+      border-radius: 8px;
+      line-height: 1.7;
+    }
+
+    .notice {
+      padding: 15px;
+      border-left: 3px solid #6996CB;
+      background: #222C38;
+      margin-top: 20px;
+    }
+
+    .source-link {
+      display: inline-block;
+      padding: 12px 16px;
+      margin: 8px 8px 8px 0;
+      background: #344153;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+    }
+
+    .source-link:hover {
+      background: #31547A;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 20px auto;
+        padding: 0 12px;
+      }
+
+      .panel {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="logo" href="index.html">GameWorld</a>
+  </header>
+
+  <main>
+    <a id="back" href="index.html">
+      ← Back to Game
+    </a>
+
+    <div class="panel">
+      <h1 id="title">Installation Guide</h1>
+
+      <div id="guideContent">
+        <p class="muted">
+          Find official installation information
+          for your country or region.
+        </p>
+
+        <label for="country">
+          Your Country / Region
+        </label>
+
+        <select id="country">
+          <option value="Philippines">Philippines</option>
+          <option value="Malaysia">Malaysia</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Other">Other</option>
+        </select>
+
+        <h2>Availability Status</h2>
+
+        <div class="notice">
+          <strong id="availability">
+            Not Verified
+          </strong>
+
+          <p class="muted" id="status"></p>
+          <p class="muted" id="lastChecked"></p>
+        </div>
+
+        <h2>Regional Installation Requirements</h2>
+
+        <div class="step">
+          <strong>Official Download</strong>
+          <p id="download">Not verified</p>
+        </div>
+
+        <div class="step">
+          <strong>Account Requirements</strong>
+          <p id="account">Not verified</p>
+        </div>
+
+        <div class="step">
+          <strong>Phone Verification</strong>
+          <p id="phone">Unknown</p>
+        </div>
+
+        <div class="step">
+          <strong>Identity Verification</strong>
+          <p id="identity">Unknown</p>
+        </div>
+
+        <div class="step">
+          <strong>International Server</strong>
+          <p id="server">Unknown</p>
+        </div>
+
+       <h2>Regional Evidence</h2>
+
+<div class="step">
+  <p id="evidenceCount">No sources recorded</p>
+  <p id="storeObservation">No store observation recorded.</p>
+</div>
+
+        <h2>Official Sources</h2>
+
+        <div id="officialSources">
+          <p class="muted">
+            No verified official sources available.
+          </p>
+        </div>
+
+        <h2>Installation Checklist</h2>
+
+        <div class="step">
+          1. Open the official website or
+          authorized game store.
+        </div>
+
+        <div class="step">
+          2. Confirm availability and account
+          requirements for your region.
+        </div>
+
+        <div class="step">
+          3. Review the official system
+          requirements and instructions.
+        </div>
+
+        <div class="step">
+          4. Download only from trusted
+          official or authorized sources.
+        </div>
+
+        <div class="notice">
+          <strong>Important</strong>
+
+          <p class="muted">
+            This is a general installation checklist.
+            It is not a verified game-specific
+            step-by-step installation guide.
+            Always confirm requirements through
+            official sources before downloading.
+          </p>
+        </div>
+      </div>
+
+      <p id="notFound" class="muted hidden">
+        This game could not be found
+        in the GameWorld database.
+      </p>
+    </div>
+  </main>
+
+  <script src="games.js"></script>
+
+  <script>
+    const params =
+      new URLSearchParams(window.location.search);
+
+    const id = params.get("id");
+
+    const game =
+      gameDatabase.find(item => item.id === id);
+
+    const title =
+      document.getElementById("title");
+
+    const back =
+      document.getElementById("back");
+
+    const countrySelect =
+      document.getElementById("country");
+
+    const guideContent =
+      document.getElementById("guideContent");
+
+    const notFound =
+      document.getElementById("notFound");
+
+    function yesNoUnknown(value) {
+      if (value === true) return "Yes";
+      if (value === false) return "No";
+      return "Unknown";
+    }
+
+    function isValidUrl(url) {
+      try {
+        const parsed = new URL(url);
+        return parsed.protocol === "https:" ||
+               parsed.protocol === "http:";
+      } catch {
+        return false;
+      }
+    }
+
+    function renderSources() {
+      const container =
+        document.getElementById("officialSources");
+
+      container.replaceChildren();
+
+      const sources = Array.isArray(game.officialSources)
+        ? game.officialSources.filter(
+            source =>
+              source.verified === true &&
+              isValidUrl(source.url)
+          )
+        : [];
+
+      if (sources.length === 0) {
+        const message = document.createElement("p");
+        message.className = "muted";
+        message.textContent =
+          "No verified official sources available.";
+        container.appendChild(message);
+        return;
+      }
+
+      sources.forEach(source => {
+        const link = document.createElement("a");
+
+        link.href = source.url;
+        link.textContent =
+          source.name || "Official Source";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.className = "source-link";
+
+        container.appendChild(link);
+      });
+    }
+
+    function renderGuide() {
+      if (!game) return;
+
+      const country = countrySelect.value;
+
+      const region =
+        game.availability?.[country];
+
+      const statusNames = {
+        available: "Officially Available",
+        restricted: "Region Restricted",
+        unavailable: "Not Officially Supported",
+        unverified: "Not Verified"
+      };
+
+      const status =
+        region?.status || "unverified";
+
+      document.getElementById("availability")
+        .textContent =
+          statusNames[status] || "Not Verified";
+
+      document.getElementById("status")
+        .textContent =
+          region?.notes ||
+          "Official availability and installation " +
+          "requirements for " + game.name +
+          " in " + country +
+          " have not been verified.";
+
+      document.getElementById("lastChecked")
+        .textContent =
+          "Last checked: " +
+          (region?.lastChecked || "Never");
+
+      document.getElementById("download")
+        .textContent =
+          region?.officialDownload || "Not verified";
+
+      document.getElementById("account")
+        .textContent =
+          region?.accountRequirements || "Not verified";
+
+      document.getElementById("phone")
+        .textContent =
+          yesNoUnknown(region?.phoneVerification);
+
+      document.getElementById("identity")
+        .textContent =
+          yesNoUnknown(region?.identityVerification);
+
+      document.getElementById("server")
+        .textContent =
+          yesNoUnknown(region?.internationalServer);
+    
+          const evidenceCount =
+  region?.evidenceSources?.length || 0;
+
+document.getElementById("evidenceCount").textContent =
+  evidenceCount + " regional evidence source(s) recorded";
+
+const observation = region?.storeObservation;
+
+document.getElementById("storeObservation").textContent =
+  observation
+    ? "Steam observation: " +
+      (observation.observedAt || "Date unknown") +
+      " | Price visible: " +
+      yesNoUnknown(observation.priceVisible) +
+      " | Purchase button visible: " +
+      yesNoUnknown(observation.purchaseButtonVisible) +
+      " | Account country confirmed: " +
+      yesNoUnknown(observation.accountCountryConfirmed)
+    : "No store observation recorded.";
+    
+    }
+
+    if (game) {
+      title.textContent =
+        game.name + " - Installation Guide";
+
+      back.href =
+        "game.html?id=" + encodeURIComponent(id);
+
+      const savedCountry =
+        localStorage.getItem("gameworld_country") ||
+        "Philippines";
+
+      const allowedCountries =
+        Array.from(countrySelect.options)
+          .map(option => option.value);
+
+      countrySelect.value =
+        allowedCountries.includes(savedCountry)
+          ? savedCountry
+          : "Philippines";
+
+      countrySelect.addEventListener(
+        "change",
+        function() {
+          localStorage.setItem(
+            "gameworld_country",
+            this.value
+          );
+
+          renderGuide();
+        }
+      );
+
+      renderSources();
+      renderGuide();
+    } else {
+      title.textContent = "Game not found";
+
+      back.href = "index.html";
+      back.textContent = "← Back to Games";
+
+      guideContent.classList.add("hidden");
+      notFound.classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
