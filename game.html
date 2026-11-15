@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, initial-scale=1">
-  <title>Game Hub - GameWorld</title>
+  <title>Game Details - GameMu</title>
 
   <style>
     * { box-sizing: border-box; }
@@ -17,17 +17,47 @@
       font-family: Arial, sans-serif;
     }
 
-    header {
-      background: #151B23;
-      padding: 22px 6%;
-      border-bottom: 1px solid #27313D;
+header {
+  background: #151B23;
+  border-bottom: 1px solid #27313D;
+  height: 92px;
+  min-height: 0;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6996CB;
+  font-family: Arial, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  flex-shrink: 0;
+  transform: scale(1.8);
+  transform-origin: center;
+}
+
+    .region-result {
+      margin: 0 0 16px;
     }
 
-    .logo {
-      color: #6996CB;
-      font-size: 26px;
+    .region-result strong {
+      font-size: 16px;
       font-weight: bold;
-      text-decoration: none;
+    }
+
+     .region-result p {
+      margin-bottom: 0;
     }
 
     main {
@@ -70,14 +100,58 @@
 }
 
 @media (max-width: 600px) {
-  .art {
-    height: 260px;
+header {
+  height: 76px;
+  padding: 14px;
+}
+
+.logo {
+  font-size: 22px;
+}
+
+  main {
+    margin: 20px auto;
+    padding: 0 12px;
   }
 
   .panel {
     padding: 18px;
+    margin-top: 16px;
+  }
+
+  .art {
+    height: 260px;
+  }
+
+  h1 {
+    font-size: 25px;
+    line-height: 1.3;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+  }
+
+  h2,
+  .status-title {
+    font-size: 18px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .status {
+    padding: 16px;
+    margin: 14px 0;
+  }
+
+  .button {
+    padding: 11px 14px;
+    font-size: 14px;
   }
 }
+
 
     h1 { margin-bottom: 8px; }
     h2 { font-size: 20px; }
@@ -92,14 +166,28 @@
       color: white;
       border: 1px solid #344153;
       border-radius: 8px;
-      margin: 8px 0 18px;
+      margin: 8px 0 12px;
     }
 
-    .status {
-      padding: 15px;
-      background: #222C38;
-      border-radius: 8px;
-      margin: 16px 0;
+
+.status {
+  padding: 16px;
+  background: #222C38;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.status-title {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #D8DFE8;
+  margin: 0 0 16px;
+}
+
+
+    .status > p:last-child {
+      margin-bottom: 0;
     }
 
     .button {
@@ -120,7 +208,10 @@
 
 <body>
   <header>
-    <a class="logo" href="index.html">GameWorld</a>
+    <a class="logo" href="index.html">
+      <img src="gameworld-logo.png" alt="GameMu Logo">
+      <span>GameMu</span>
+    </a>
   </header>
 
   <main>
@@ -134,20 +225,26 @@
       <p id="gameDescription"></p>
 
       <div class="status">
-  <strong>Game Data Verification</strong>
+  <strong class="status-title">Game Data Verification</strong>
   <p id="verificationStatus" class="muted"></p>
   <p id="lastVerified" class="muted"></p>
 </div>
+
 <div class="status">
-  <h2>Official Sources</h2>
-  <div id="officialSources">
+  <strong class="status-title">Official Sources</strong>
+  <div id="officialSources" style="margin-top: 16px;">
     No verified official sources available.
   </div>
 </div>
-      <h2>Game Information</h2>
-      <p class="muted" id="developer"></p>
 
-      <h2>Availability & Installation</h2>
+<div class="status">
+  <strong class="status-title">Game Information</strong>
+  <p class="muted" id="developer"></p>
+</div>
+      
+      <div class="status">
+
+      <h2 class="status-title">Availability & Installation</h2>
 
       <label for="country">Your Country / Region</label>
       <select id="country" onchange="updateStatus()">
@@ -157,62 +254,15 @@
         <option value="Other">Other</option>
       </select>
 
-      <div class="status">
-        <strong id="availability">Not verified</strong>
-        <p class="muted" id="statusMessage"></p>
-      </div>
-
-<div class="status">
-  <h2>Regional Installation Requirements</h2>
-
-  <p>Official Download:
-    <span id="regionalDownload">Not verified</span>
-  </p>
-
-  <p>Account Requirements:
-    <span id="regionalAccount">Not verified</span>
-  </p>
-
-  <p>Phone Verification:
-    <span id="regionalPhone">Unknown</span>
-  </p>
-
-  <p>Identity Verification:
-    <span id="regionalIdentity">Unknown</span>
-  </p>
-
-  <p>International Server:
-    <span id="regionalServer">Unknown</span>
-  </p>
-
-  <p>Evidence Sources:
-    <span id="regionalEvidence">No sources recorded</span>
-  </p>
-  <div id="evidenceList"></div>
-  
-<h3>Steam Store Observation</h3>
-
-<div id="storeObservation">
-  <p>Price visible: <span id="storePrice">Unknown</span></p>
-  <p>Purchase button visible: <span id="storePurchase">Unknown</span></p>
-  <p>Steam account country confirmed: <span id="storeCountry">Unknown</span></p>
-  <p>Observed on: <span id="storeObservedAt">Never</span></p>
-</div>
-
-<p class="muted">
-  Store observations do not guarantee purchase,
-  download, or installation eligibility.
-</p>
-
-
-  <p>Last Checked:
-    <span id="regionalChecked">Never</span>
-  </p>
+<div class="region-result">
+  <strong id="availability">Not verified</strong>
+  <p class="muted" id="statusMessage"></p>
 </div>
 
       <a class="button" id="guideLink" href="guide.html">
   View Installation Guide
 </a>
+</div>
     </div>
   </main>
 
@@ -300,7 +350,7 @@ if (game.coverImage) {
   document.getElementById("gameIcon").textContent = "🎮";
 
   document.getElementById("gameDescription").textContent =
-    "This game could not be found in the GameWorld database.";
+    "This game could not be found in the GameMu database.";
 
   document.getElementById("guideLink").style.display = "none";
 
@@ -328,137 +378,7 @@ function updateStatus() {
   document.getElementById("statusMessage").textContent =
     region?.notes ||
     "Official availability and installation requirements " +
-    "for " + country + " have not been verified yet.";
-  document.getElementById("regionalDownload").textContent =
-    region?.officialDownload || "Not verified";
-
-  document.getElementById("regionalAccount").textContent =
-    region?.accountRequirements || "Not verified";
-
-  function yesNoUnknown(value) {
-    if (value === true) return "Yes";
-    if (value === false) return "No";
-    return "Unknown";
-  }
-
-  document.getElementById("regionalPhone").textContent =
-    yesNoUnknown(region?.phoneVerification);
-
-  document.getElementById("regionalIdentity").textContent =
-    yesNoUnknown(region?.identityVerification);
-
-  document.getElementById("regionalServer").textContent =
-    yesNoUnknown(region?.internationalServer);
-
-  document.getElementById("regionalEvidence").textContent =
-    region?.evidenceSources?.length
-      ? region.evidenceSources.length + " source(s) recorded"
-      : "No sources recorded";
-
-  document.getElementById("regionalChecked").textContent =
-    region?.lastChecked || "Never";
-  const evidenceList =
-    document.getElementById("evidenceList");
-
-  evidenceList.replaceChildren();
-
-  const evidenceSources = region?.evidenceSources || [];
-
-  evidenceSources.forEach(source => {
-    const item = document.createElement("div");
-    item.style.marginTop = "12px";
-    item.style.padding = "12px";
-    item.style.background = "#151B23";
-    item.style.borderRadius = "8px";
-
-    const title = document.createElement("p");
-    title.textContent = source.title || "Untitled source";
-
-    const link = document.createElement("a");
-    link.textContent = "View Source";
-    link.href = source.url;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    link.className = "button";
-
-    
-const note = document.createElement("p");
-note.className = "muted";
-
-function isEvidenceOutdated(checkedAt) {
-  if (!checkedAt) return false;
-
-  const checkedDate = new Date(checkedAt + "T00:00:00");
-
-  if (Number.isNaN(checkedDate.getTime())) {
-    return false;
-  }
-
-  const today = new Date();
-
-  const daysPassed =
-    (today.getTime() - checkedDate.getTime()) /
-    (1000 * 60 * 60 * 24);
-
-  return daysPassed > 90;
-}
-
-const verificationLabels = {
-  pending: "Pending Verification",
-  verified: "Verified",
-  outdated: "Needs Recheck"
-};
-
-
-const outdated = isEvidenceOutdated(source.checkedAt);
-
-note.textContent =
-  source.verificationStatus === "outdated" ||
-  (source.verificationStatus === "verified" && outdated)
-    ? "Needs Recheck"
-    : verificationLabels[source.verificationStatus] ||
-      "Pending Verification";
-
-
-const checkedDate = document.createElement("p");
-checkedDate.className = "muted";
-checkedDate.textContent =
-  "Last checked: " + (source.checkedAt || "Never");
-
-
-    item.appendChild(title);
-    item.appendChild(note);
-    item.appendChild(checkedDate);
-
-    if (source.url &&
-        /^https:\/\/[^/]+/i.test(source.url)) {
-      item.appendChild(link);
-    }
-
-    evidenceList.appendChild(item);
-  });
-  
-const observation = region?.storeObservation;
-
-function observationText(value) {
-  if (value === true) return "Yes";
-  if (value === false) return "No";
-  return "Unknown";
-}
-
-document.getElementById("storePrice").textContent =
-  observationText(observation?.priceVisible);
-
-document.getElementById("storePurchase").textContent =
-  observationText(observation?.purchaseButtonVisible);
-
-document.getElementById("storeCountry").textContent =
-  observationText(observation?.accountCountryConfirmed);
-
-document.getElementById("storeObservedAt").textContent =
-  observation?.observedAt || "Never";
-
-
+    "for " + country + " have not been verified yet.";  
 
 }
 
