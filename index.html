@@ -706,9 +706,7 @@ function updateStatistics() {
   document.getElementById("totalGames").textContent =
     games.length;
 
-  const countries = games.map(game =>
-    game.country === "Korea" ? "South Korea" : game.country
-  );
+  const countries = games.map(game => game.country);
 
   document.getElementById("totalCountries").textContent =
     new Set(countries).size;
@@ -818,11 +816,7 @@ function updateDeveloperStatistics() {
 const filtered = games.filter(game =>
   (
     selectedCountry === "All" ||
-    game.country === selectedCountry ||
-    (
-      selectedCountry === "South Korea" &&
-      game.country === "Korea"
-    )
+    game.country === selectedCountry
   ) &&
   (
     game.name.toLowerCase().includes(search) ||
