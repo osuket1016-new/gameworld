@@ -1,10 +1,17 @@
 
 const gameDatabase = [
   {
-    id: "wukong",
-    name: "Black Myth: Wukong",
-    coverImage: "images/wukong-cover.jpg",
-    country: "China",
+  id: "wukong",
+  name: "Black Myth: Wukong",
+
+  distribution: {
+    type: "steam",
+    platform: "Steam",
+    installationGuide: "steam"
+  },
+
+  coverImage: "images/wukong-cover.jpg",
+  country: "China",
     genre: "Action RPG",
     developer: "Game Science",
     icon: "🐒",
@@ -66,6 +73,13 @@ verificationStatus: "unverified"
   {
     id: "elden",
     name: "Elden Ring",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/elden-cover.jpg",
     country: "Japan",
     genre: "Action RPG",
@@ -89,6 +103,13 @@ verificationStatus: "unverified"
   {
     id: "pubg",
     name: "PUBG: BATTLEGROUNDS",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/pubg-cover.jpg",
     country: "South Korea",
     genre: "Battle Royale",
@@ -112,6 +133,13 @@ verificationStatus: "unverified"
   {
     id: "stardew",
     name: "Stardew Valley",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/stardew-cover.jpg",
     country: "USA",
     genre: "Simulation",
@@ -135,6 +163,13 @@ verificationStatus: "unverified"
   {
     id: "lies",
     name: "Lies of P",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/lies-cover.jpg",
     country: "South Korea",
     genre: "Action RPG",
@@ -158,6 +193,13 @@ verificationStatus: "unverified"
   {
     id: "palworld",
     name: "Palworld",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/palworld-cover.jpg",
     country: "Japan",
     genre: "Survival",
@@ -181,6 +223,13 @@ verificationStatus: "unverified"
   {
     id: "wuchang",
     name: "WUCHANG: Fallen Feathers",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/wuchang-cover.jpg",
     country: "China",
     genre: "Action RPG",
@@ -205,6 +254,13 @@ verificationStatus: "unverified"
  {
     id: "stellar-blade",
     name: "Stellar Blade",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/stellar-blade-cover.jpg",
     country: "South Korea",
     genre: "Action Adventure",
@@ -229,6 +285,13 @@ verificationStatus: "unverified"
   {
     id: "naraka-bladepoint",
     name: "NARAKA: BLADEPOINT",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/naraka-cover.jpg",
     country: "China",
     genre: "Battle Royale",
@@ -253,6 +316,13 @@ verificationStatus: "unverified"
   {
     id: "monster-hunter-wilds",
     name: "Monster Hunter Wilds",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/monster-hunter-wilds-cover.jpg",
     country: "Japan",
     genre: "Action RPG",
@@ -278,6 +348,13 @@ verificationStatus: "unverified"
   {
     id: "the-first-berserker-khazan",
     name: "The First Berserker: Khazan",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/the-first-berserker-khazan-cover.jpg",
     country: "South Korea",
     genre: "Action RPG",
@@ -303,6 +380,13 @@ verificationStatus: "unverified"
   {
     id: "inzoi",
     name: "inZOI",
+
+distribution: {
+  type: "steam",
+  platform: "Steam",
+  installationGuide: "steam"
+},
+
     coverImage: "images/inzoi-cover.jpg",
     country: "South Korea",
     genre: "Life Simulation",
